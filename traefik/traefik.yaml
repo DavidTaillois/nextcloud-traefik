@@ -1,0 +1,35 @@
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: :443
+    http:
+      tls:
+        certResolver: myresolver
+      middlewares:
+      - SecHeaders@file
+
+accessLog: {}
+
+providers:
+  docker:
+    exposedByDefault: false
+
+  file:
+    directory: /etc/traefik/custom/
+    watch: true
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      # Uncomment for Dev test
+      #caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+      email: "david.taillois@protonmail.com"
+      storage: "/letsencrypt/acme.json"
+      tlsChallenge: {}

@@ -1,38 +1,38 @@
 version: '3.7'
 
 services:
-  database:
+  db:
     image: mariadb
     restart: unless-stopped
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --skip-innodb-read-only-compressed
     environment:
-        MARIADB_ROOT_PASSWORD_FILE: '/run/secrets/mariadb-root-password'
-        MARIADB_USER_FILE: '/run/secrets/mariadb-user'
-        MARIADB_DATABASE_FILE: '/run/secrets/mariadb-database'
-        MARIADB_PASSWORD_FILE: '/run/secrets/mariadb-password'
+      MARIADB_ROOT_PASSWORD_FILE: '/run/secrets/mariadb-root-password'
+      MARIADB_USER_FILE: '/run/secrets/mariadb-user'
+      MARIADB_DATABASE_FILE: '/run/secrets/mariadb-database'
+      MARIADB_PASSWORD_FILE: '/run/secrets/mariadb-password'
     secrets:
       - mariadb-root-password
       - mariadb-user
       - mariadb-database
       - mariadb-password
-     network:
-       - lan
-     volumes:
-       - db:/var/lib/mysql
+    networks:
+      - lan
+    volumes:
+      - db:/var/lib/mysql
 
   nextcloud:
     depends_on:
-      - database
+      - db
     image: nextcloud
     restart: unless-stopped
     environment:
-        MYSQL_HOST: 'database'
-        MYSQL_USER_FILE: '/run/secrets/mariadb-user'
-        MYSQL_DATABASE_FILE: '/run/secrets/mariadb-database'
-        MYSQL_PASSWORD_FILE: '/run/secrets/mariadb-password'    
-        NEXTCLOUD_ADMIN_PASSWORD_FILE: '/run/secrets/nextcloud-admin-password'
-        NEXTCLOUD_ADMIN_USER_FILE: '/run/secrets/nextcloud-admin-user'
-        NEXTCLOUD_TRUSTED_DOMAINS_FILE: 'nextcloud.unmondefaitmain.fr'
+      MYSQL_HOST: 'database'
+      MYSQL_USER_FILE: '/run/secrets/mariadb-user'
+      MYSQL_DATABASE_FILE: '/run/secrets/mariadb-database'
+      MYSQL_PASSWORD_FILE: '/run/secrets/mariadb-password'
+      NEXTCLOUD_ADMIN_PASSWORD_FILE: '/run/secrets/nextcloud-admin-password'
+      NEXTCLOUD_ADMIN_USER_FILE: '/run/secrets/nextcloud-admin-user'
+      NEXTCLOUD_TRUSTED_DOMAINS_FILE: ${NEXTCLOUD_URL}
     secrets:
       - mariadb-user
       - mariadb-database
@@ -48,8 +48,10 @@ services:
       traefik.enable: true
       traefik.docker.network: traefik_web
       traefik.http.routers.nextcloud.entrypoints: websecure
-      traefik.http.routers.nextcloud.rule: 'Host(`nextcloud.unmondefaitmain.fr`)'
+      traefik.http.routers.nextcloud.rule: 'Host(`${NEXTCLOUD_URL}`)'
       traefik.http.services.nextcloud.loadbalancer.server.port: 80
+      traefik.http.routers.nextcloud.tls: true
+      traefik.http.routers.nextcloud.tls.certresolver: myresolver
 
 
 volumes:
@@ -59,7 +61,6 @@ volumes:
 networks:
   traefik_web:
     external: true
-
   lan:
 
 secrets:
@@ -74,4 +75,4 @@ secrets:
   nextcloud-admin-user:
     file: ./secrets/nextcloud-admin-user.txt
   nextcloud-admin-password:
-    file ./secrets/nextcloud-admin-password.txt
+    file: ./secrets/nextcloud-admin-password.txt

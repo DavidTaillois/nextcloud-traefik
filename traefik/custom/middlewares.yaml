@@ -1,0 +1,15 @@
+http:
+  middlewares:
+    SecHeaders:
+      headers:
+        contentSecurityPolicy: "script-src 'self';img-src 'self'"
+        referrerPolicy: "same-origin"
+        customResponseHeaders:
+          Permissions-Policy: "geolocation=(self), microphone=(), camera=(), fullscreen=*" 
+        frameDeny: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsSeconds: 31536000

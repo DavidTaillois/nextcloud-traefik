@@ -33,6 +33,7 @@ services:
       NEXTCLOUD_ADMIN_PASSWORD_FILE: '/run/secrets/nextcloud-admin-password'
       NEXTCLOUD_ADMIN_USER_FILE: '/run/secrets/nextcloud-admin-user'
       NEXTCLOUD_TRUSTED_DOMAINS: ${NEXTCLOUD_URL}
+      OVERWRITEPROTOCOL: 'https'
     secrets:
       - mariadb-user
       - mariadb-database
@@ -52,6 +53,27 @@ services:
       traefik.http.services.nextcloud.loadbalancer.server.port: 80
       traefik.http.routers.nextcloud.tls: true
       traefik.http.routers.nextcloud.tls.certresolver: myresolver
+
+  collabora:
+    depends_on:
+      - nextcloud
+    image: collabora/code
+    restart: unless-stopped
+    environment:
+      - domain=nextcloud.unmondefaitmain.fr
+      - extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:net.post_allow.host[0]=172.28.0.3 --o:storage.wopi.host[0]=172.28.0.3 --o:net.post_allow.host[1]=172.20.0.2 --o:storage.wopi.host[1]=172.20.0.2  --o:storage.wopi.host[2]=82.65.210.239 --o:net.proto=IPv4
+        #- extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:net.post_allow.host[0]=.+ --o:storage.wopi.host[0]=.+
+    networks:
+      - lan 
+      - traefik_web
+    labels:
+      traefik.enable: true
+      traefik.docker.network: traefik_web
+      traefik.http.routers.collabora.entrypoints: websecure
+      traefik.http.routers.collabora.rule: 'Host(`${COLLABORA_DOMAIN}`)'
+      traefik.http.services.collabora.loadbalancer.server.port: 9980
+      traefik.http.routers.collabora.tls: true
+      traefik.http.routers.collabora.tls.certresolver: myresolver
 
 
 volumes:

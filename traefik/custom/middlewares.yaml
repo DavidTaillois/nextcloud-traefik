@@ -3,7 +3,7 @@ http:
     SecHeaders:
       headers:
         customResponseHeaders:
-        Permissions-Policy: "geolocation=(self), microphone=(), camera=(), fullscreen=*" 
+          Permissions-Policy: "geolocation=(self), microphone=(), camera=(), fullscreen=*" 
         frameDeny: true
         contentTypeNosniff: true
         browserXssFilter: true

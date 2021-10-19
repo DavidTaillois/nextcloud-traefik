@@ -14,6 +14,7 @@ entryPoints:
         certResolver: myresolver
       middlewares:
       - SecHeaders@file
+      - NextcloudReplacePathRegex@file
 
 accessLog: {}
 

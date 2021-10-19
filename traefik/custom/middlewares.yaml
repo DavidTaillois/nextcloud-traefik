@@ -12,3 +12,8 @@ http:
         stsIncludeSubdomains: true
         stsSeconds: 31536000
         customFrameOptionsValue: "SAMEORIGIN"
+    NextcloudReplacePathRegex:
+      replacepathregex:
+        regex: "^/.well-known/ca(l|rd)dav"
+        replacement: "/remote.php/dav/"
+

@@ -40,8 +40,7 @@ cat mariadb-user.txt
 nextcloud
 ```
 8. On traefik/traefik.yaml set your email line 34
-9. start traefik `cd traefik && docker-compose up --force-recreate -d`
-10. start nextcloud `cd nextcloud && docker-compose up --force-recreate -d`
+9. launch docker_start.sh
 11. Enjoy your nextcloud !! 
 12. if it doesnt' work debug errors with docker-compose logs
  

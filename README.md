@@ -1,7 +1,13 @@
 # unmondefaitmain
 
+## Introduction
 
-## How deploy your own nextcloud
+This repository able you to use nextcloud with collabora protected by a proxy called traefik, all managed wih docker-compose, the database is located on mariadb container. 
+
+All data are stored on volumes, wich you should retrieve with the command `docker volume ls`
+
+
+## How deploy your own nextcloud with collabora
 
 Step by step:
 

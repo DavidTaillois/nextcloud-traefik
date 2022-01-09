@@ -9,7 +9,14 @@ All datas are stored on volumes, which you should retrieve with the command `doc
 
 ## How deploy your own nextcloud with collabora
 
-Step by step:
+
+<ins>Prerequired:</ins>
+
+1. Configure a nextcloud domains name on your DNS provider (ex: nextcloud.yourdomain.io)
+2. Configure a collabora domains name on your DNS provider (ex: collabora.yourdomain.io)
+
+
+<ins>Step by step:</ins>
 
 1. Open up your Terminal / Command Line
 2. `git clone` the repository

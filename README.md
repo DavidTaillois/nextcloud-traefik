@@ -30,11 +30,12 @@ COLLABORA_PASSWORD=yourpassword
 COLLABORA_USERNAME=yourlogin
 ```
 6. Create a directory secrets on nextcloud directory `mkdir secrets`
-7. On the "secrets" directory you have create those files bellow with specific parameters on it.
+7. On the "secrets" directory you have to create those files bellow with specific parameters on it.
 ```
 ls secrets
 mariadb-database.txt  mariadb-root-password.txt  nextcloud-admin-password.txt
 mariadb-password.txt  mariadb-user.txt           nextcloud-admin-user.txt
+
 #example here with mariadb-user.txt
 cat mariadb-user.txt 
 nextcloud

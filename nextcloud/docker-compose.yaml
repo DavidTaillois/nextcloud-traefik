@@ -61,7 +61,7 @@ services:
     image: collabora/code
     restart: unless-stopped
     environment:
-      - domain=nextcloud.unmondefaitmain.fr
+      - domain=`${NEXTCLOUD_URL}`
       - extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:net.post_allow.host[1]=172.20.0.3 --o:storage.wopi.host[1]=172.20.0.3  --o:storage.wopi.host[2]=82.65.210.239 --o:net.proto=IPv4
         #- extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:net.post_allow.host[0]=.+ --o:storage.wopi.host[0]=.+
     networks:

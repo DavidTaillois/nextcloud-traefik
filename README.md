@@ -4,8 +4,6 @@
 
 This repository able you to use nextcloud with collabora protected by a proxy called traefik, all managed with docker-compose, the database is located on a mariadb container. 
 
-All datas are stored on volumes, which you should retrieve with the command `docker volume ls` and `docker volume inspect --format='{{.Mountpoint}}' $VOLUME_NAME` to backup them else where.
-
 
 ## How deploy your own nextcloud with collabora
 
@@ -46,5 +44,8 @@ nextcloud
 12. if it doesnt' work debug errors with docker-compose logs
  
 
+## Backup Procedure
 
+### Datas and themes
+All datas and themes are stored on volumes, which you should retrieve with the command `docker volume ls` and `docker volume inspect --format='{{.Mountpoint}}' $VOLUME_NAME` to backup them else where.
 

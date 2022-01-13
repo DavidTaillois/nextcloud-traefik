@@ -34,3 +34,16 @@ certificatesResolvers:
       email: "david.taillois@protonmail.com"
       storage: "/letsencrypt/acme.json"
       tlsChallenge: {}
+
+
+# TO TEST FOR TLS FROM DNS
+# certificatesResolvers:
+#   myresolver:
+#     acme:
+#       # Uncomment for Dev test
+#       #caServer: "https://acme-staging-v02.api.letsencrypt.org/directory"
+#       email: "example@your.com"
+#       storage: "/letsencrypt/acme.json"
+#       dnsChallenge:
+#         provider: gandiv5
+#         delayBeforeCheck: 5

@@ -23,7 +23,7 @@ services:
   nextcloud:
     depends_on:
       - db
-    image: nextcloud
+    image: nextcloud:23.0.0
     restart: unless-stopped
     environment:
       MYSQL_HOST: 'db'
